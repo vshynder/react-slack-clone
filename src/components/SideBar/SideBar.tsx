@@ -7,6 +7,7 @@ const data: [] = [];
 
 const SideBar: React.FC<SideBarProps> = () => {
   const handleCreateNew = () => {};
+
   return (
     <>
       <SideBarSelect
