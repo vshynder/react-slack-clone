@@ -1,5 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import { CreateDialog } from "../CreateDialog";
+import { DirectChat } from "../DirectChat";
+import { PrivateRoute } from "../PrivateRoute";
 import { SideBar } from "../SideBar";
 
 const MainDiv = styled.div`
@@ -24,7 +27,16 @@ const Main: React.FC = () => {
       <SideBarWrapper>
         <SideBar />
       </SideBarWrapper>
-      <ChatWrapper></ChatWrapper>
+      <PrivateRoute
+        exact
+        path="/directchat/:chatId"
+        render={() => (
+          <ChatWrapper>
+            <DirectChat />
+          </ChatWrapper>
+        )}
+      />
+      <CreateDialog />
     </MainDiv>
   );
 };

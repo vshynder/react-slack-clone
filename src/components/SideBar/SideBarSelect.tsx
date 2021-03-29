@@ -10,10 +10,14 @@ export interface SideBarSelectProps {
   title: string;
   elements: Array<iSideBarElement> | [];
   onCreateNew: () => void;
+  onSelect: (i: number) => void;
 }
 
 interface iWrapperProps {
   readonly isClosed: boolean;
+}
+interface iItemProps {
+  last?: boolean;
 }
 
 const Wrapper = styled.div<iWrapperProps>`
@@ -44,13 +48,14 @@ const Data = styled.div`
   padding-left: 30px;
 `;
 
-const Item = styled.p`
+const Item = styled.p<iItemProps>`
   color: white;
-  opacity: 0.2;
+  ${(props) => (props.last ? "opacity: 0.2" : "opacity: 0.6")};
   transition: 250ms;
+  padding: 3px 0;
   cursor: pointer;
   :hover {
-    opacity: 0.6;
+    opacity: 0.8;
   }
 `;
 
@@ -58,6 +63,7 @@ const SideBarSelect: React.FC<SideBarSelectProps> = ({
   title,
   elements,
   onCreateNew,
+  onSelect,
 }) => {
   const [isClosed, setIsClosed] = useState<boolean>(false);
   const toggleIsClosed = () => setIsClosed((p) => !p);
@@ -70,9 +76,16 @@ const SideBarSelect: React.FC<SideBarSelectProps> = ({
       <Data>
         {elements &&
           elements.map((element: iSideBarElement, index: number) => {
-            return <Item key={index}>{element.title}</Item>;
+            const handelClick = () => onSelect(index);
+            return (
+              <Item onClick={handelClick} key={index}>
+                {element.title}
+              </Item>
+            );
           })}
-        <Item onClick={onCreateNew}>+ create new</Item>
+        <Item last onClick={onCreateNew}>
+          + create new
+        </Item>
       </Data>
     </Wrapper>
   );

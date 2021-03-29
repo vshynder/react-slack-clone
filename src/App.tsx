@@ -1,8 +1,8 @@
 import React from "react";
 import { Provider } from "react-redux";
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import styled from "styled-components";
-import { Header, Main } from "./components";
+import { Header, LoginForm, Main, PrivateRoute } from "./components";
 import { store } from "./redux";
 
 function App() {
@@ -10,7 +10,8 @@ function App() {
     <Provider store={store}>
       <Router>
         <Header />
-        <Main />
+        <PrivateRoute exact path="/login" component={LoginForm} />
+        <PrivateRoute isPrivate path="/" component={Main} />
       </Router>
     </Provider>
   );
